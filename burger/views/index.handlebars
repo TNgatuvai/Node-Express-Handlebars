@@ -1,55 +1,66 @@
-<div class="container-main">
-    <div>
-
-        <div class="col-md-9 text-center m-5" id="top-bar">
-            <img src="/assets/burgerpic.jpg" alt="Burger">
-            <br>
-            <br>
-            <h1>Eat tha Burgers!</h1>
-        </div>
+<div class="container">
+    <div class="jumbotron">
+        <img src="https://www.chicken.ca/assets/RecipePhotos/_resampled/FillWyIxNDQwIiwiNzAwIl0/Big-Juicy-Burgers.jpg"
+            width="100%" height="10%">
+        <h1>Eat Burgers!!!</h1>
     </div>
+
+
     <div class="row">
-        <div class="col-md-6 text-center">
-            <h2>Burgers to Try:</h2>
-            <br>
-            {{#each burger_data}}
-            {{#unless this.devoured}}
-            <h3>{{this.burger_name}}</h3>
-            <form method="POST" class="devour-form button-size" action="/api/burgers/update">
-                <input input type="hidden" name="burger_id" type="text" value={{this.id}}>
-                <button type="submit" class="btn btn-primary">
-                    EAT IT! </button>
-            </form>
-            {{/unless}}
-            {{/each}}
-        </div>
 
-        <div>
-            <h2>Burgers Eaten:</h2>
-            <br>
-            {{#each burger_data}}
-            {{#if this.devoured}}
-            <ul>
-                <h3>{{this.burger_name}}</h3>
-            </ul>
-            {{/if}}
-            {{/each}}
-        </div>
-    </div>
+        <div class="col-md-4 col-md-offset-1">
+            <div class="panel-panel default">
+                <h1>Ready to Eat Burger</h1>
+                <ul class="list-group">
+                    {{#each burgers}}
+                    {{#unless this.devoured}}
+                    <li class="list-group-item">
+                        <div class="input-group">
+                            <p class="lead">{{this.burger_name}}</p>
+                            <span class="input-group-btn">
 
-    <div class="col-md-12 text-center m-2">
-        <div>
-            <div>
-                <h2>Add a Burger</h2>
+                                <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
+                                    <input type="hidden" name="devoured" value="true">
+                                    <button class="btn btn-default btn-lg" type="submit">Devour it!</button>
+                                </form>
+                            </span>
+                        </div>
+                    </li>
+                    {{/unless}}
+                    {{/each}}
+                </ul>
+
             </div>
-            <br>
-            <form class="create-form" action="/api/burgers" method="POST">
-                <div class="form-group"><span></span>
-                    <label for="bn">Burger Name:</label>
-                    <input type="text" id="bn" name="burger_name">
-                    <button type="submit" class="btn btn-success" id="add-burger">
-                        ADD BURGER</button>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2">
+                <h1>Devoured Burgers</h1>
+                <div class="panel panel-default">
+                    <ul class="list-group">
+                        {{#each burgers}}
+                        {{#if this.devoured}}
+                        <li class="list-group-item">
+                            <p class="lead">{{this.burger_name}}</p>
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                    </ul>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-10 col-md-offset-1">
+            <p class="lead">add burger & click submit</p>
+
+            <form class="create-update-form" action="burgers/create" method="POST">
+                <div class="form-group">
+                    <textarea class="form-control input-lg" type="text" name="burger_name" row="3"></textarea>
+                </div>
+                <button class="btn btn-default btn-lg" type="submit">Submit</button>
             </form>
         </div>
+
     </div>
+</div>
